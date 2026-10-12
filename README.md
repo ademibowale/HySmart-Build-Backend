@@ -41,3 +41,10 @@ All company-scoped application routes require Supabase authentication plus centr
 
 For the final launch checklist, see `PRODUCTION-GO-LIVE-v4.6.0.md` at the release root.
 # HySmart-Build-Backend
+
+## Self-hosted HySmart intelligent Customer Care (no OpenAI dependency)
+- `CUSTOMER_CARE_LOCAL_MODEL_URL` — private Ollama server URL; defaults to `http://127.0.0.1:11434`.
+- `CUSTOMER_CARE_LOCAL_MODEL_NAME` — locally installed model name; defaults to `qwen2.5:7b`.
+- Install Ollama on the backend host or a private model host, then pull the chosen model (for example, `ollama pull qwen2.5:7b`) and ensure the Ollama service is reachable from the backend. The backend calls Ollama's native `/api/chat` endpoint; it does not use an OpenAI API, key, or account.
+- If the model service is unavailable or returns invalid output, Customer Care safely falls back to retrieved official HySmart help articles. The assistant receives product documentation, not live company/project/payment records.
+- Keep the model endpoint on a private network and apply network access controls. Model hardware needs depend on model size, concurrent users and response-time targets.
